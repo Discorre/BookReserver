@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/newname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Имя"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/newfamname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Фамилия"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/newsurname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Отчество"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/newnumpass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="Идентификационный номер"
+        android:textSize="16dp" />
+
+    <EditText
+        android:id="@+id/newbirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="ДД.ММ.ГГ"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/btnok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="OK"
+        android:textSize="16dp" />
+</LinearLayout>
