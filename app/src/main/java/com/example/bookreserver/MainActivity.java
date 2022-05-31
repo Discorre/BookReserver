@@ -1,13 +1,13 @@
 package com.example.bookreserver;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
-    static Button myBooks, initBooks, myDetails, newDetails;
+    static Button myBooks, initBooks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,16 +21,6 @@ public class MainActivity extends AppCompatActivity {
         initBooks = findViewById(R.id.initbooks);
         initBooks.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, SelectBooks.class);
-            startActivity(intent);
-        });
-        myDetails = findViewById(R.id.mydetails);
-        myDetails.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, MyDetails.class);
-            startActivity(intent);
-        });
-        newDetails = findViewById(R.id.newdetails);
-        newDetails.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, NewDetails.class);
             startActivity(intent);
         });
 

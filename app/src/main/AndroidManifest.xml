@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectBooks"/>
-        <activity android:name=".MyDetails"/>
         <activity android:name=".NewDetails"/>
         <activity android:name=".MyBooks"/>
     </application>

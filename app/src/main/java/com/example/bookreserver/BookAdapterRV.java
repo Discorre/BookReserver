@@ -1,29 +1,36 @@
 package com.example.bookreserver;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-
 import java.util.ArrayList;
 
-public class BookAdapterRV extends RecyclerView.Adapter<BookAdapterRV.ViewHolder> {
-    private final ArrayList<Books> books;
-    private final LayoutInflater inflater;
+public class BookAdapterRV extends RecyclerView.Adapter<BookAdapterRV.ViewHolder> implements View.OnClickListener {
 
-    public BookAdapterRV(Context context, ArrayList<Books> books) {
-        this.books = books;
-        this.inflater = LayoutInflater.from(context);
+    interface OnBookClickListener {
+        void onBookClick(Books books, int position);
     }
 
+    private final ArrayList<Books> books;
+    private final LayoutInflater inflater;
+    private Context mContext;
+
+    private final OnBookClickListener onClickListener;
+
+    public BookAdapterRV(ArrayList<Books> books, Context context, OnBookClickListener onClickListener) {
+        this.books = books;
+        this.inflater = LayoutInflater.from(context);
+        this.mContext = context;
+        this.onClickListener = onClickListener;
+
+    }
 
     @NonNull
     @Override
@@ -32,14 +39,16 @@ public class BookAdapterRV extends RecyclerView.Adapter<BookAdapterRV.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookAdapterRV.ViewHolder holder, int position) {
-        Books bookin = books.get(position);
-        holder.bname.setText(bookin.getName());
-        holder.author.setText(bookin.getAuthor());
-        holder.resbtn.setOnClickListener(v -> {
-
+    public void onBindViewHolder(@NonNull BookAdapterRV.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        Books bookses = books.get(position);
+        holder.title.setText("Название: " + bookses.getName());
+        holder.author.setText("Автор: " + bookses.getAuthor());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickListener.onBookClick(bookses, position);
+            }
         });
-
     }
 
     @Override
@@ -47,14 +56,20 @@ public class BookAdapterRV extends RecyclerView.Adapter<BookAdapterRV.ViewHolder
         return books.size();
     }
 
+    @Override
+    public void onClick(View view) {
+    }
+
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final Button resbtn;
-        final TextView bname, author;
+        final TextView title;
+        final TextView author;
+
         public ViewHolder(@NonNull View v) {
             super(v);
-            resbtn = v.findViewById(R.id.reservebtn);
-            bname = v.findViewById(R.id.name);
+            title = v.findViewById(R.id.name);
             author = v.findViewById(R.id.author);
+
 
         }
     }

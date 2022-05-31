@@ -8,13 +8,24 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.UnusedAppRestrictionsBackportCallback;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class NewDetails extends AppCompatActivity {
-    DatabaseHelper databaseHelper;
     SQLiteDatabase library;
 
-    EditText etnewname, etnewfamile, etnewsurename, etnewnumpass, etnewbirthday;
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
+    private static Calendar c = Calendar.getInstance();
+    private static Date date = new Date();
+
+    public static String deadline = sdf.format(c.getTime());
+
+    public static final String EXTRA_MESSAGE123 = "com.example.bookreserver.MyBooksRV";
+
+    EditText etnewnumpass;
     Button btnok;
 
     @Override
@@ -22,49 +33,43 @@ public class NewDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newdetails_main);
         library = getBaseContext().openOrCreateDatabase("library.db", MODE_PRIVATE, null);
-        library.execSQL("CREATE TABLE IF NOT EXISTS users(_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, famile TEXT NOT NULL, surname TEXT NOT NULL, numpass TEXT NOT NULL, birthday TEXT NOT NULL)");
-        //databaseHelper = new DatabaseHelper(getApplicationContext());
-        //library = databaseHelper.getWritableDatabase();
-        etnewname = findViewById(R.id.newname);
-        etnewfamile = findViewById(R.id.newfamname);
-        etnewsurename = findViewById(R.id.newsurname);
+        library.execSQL("CREATE TABLE IF NOT EXISTS mybooks(_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, author TEXT, numpass TEXT, deadline TEXT)");
         etnewnumpass = findViewById(R.id.newnumpass);
-        etnewbirthday = findViewById(R.id.newbirthday);
         btnok = findViewById(R.id.btnok);
+
         btnok.setOnClickListener(v -> {
-            if (etnewname != null || etnewfamile != null || etnewsurename != null || etnewnumpass != null || etnewbirthday != null) {
-                initUsers();
-            /*etnewname.setText(null);
-            etnewfamile.setText(null);
-            etnewsurename.setText(null);
-            etnewnumpass.setText(null);
-            etnewbirthday.setText(null);*/
+            if (etnewnumpass.getText().toString().equals("")) {
+                Toast.makeText(getApplicationContext(), "Введите данные!!!", Toast.LENGTH_SHORT).show();
+
+            } else {
+                update();
                 goHome();
-            }else{
-                Toast.makeText(getApplicationContext(),"NS XT CRF",Toast.LENGTH_LONG).show();
 
             }
         });
-
-
     }
 
 
-    private void initUsers() {
-        String name = etnewname.getText().toString();
-        String famile = etnewfamile.getText().toString();
-        String surname = etnewsurename.getText().toString();
-        String numpass = etnewnumpass.getText().toString();
-        String birthday = etnewbirthday.getText().toString();
-        library.execSQL("INSERT INTO users(name, famile, surname, numpass, birthday) VALUES('"
-                + name + "', '"
-                + famile + "', '"
-                + surname + "', '"
-                + numpass + "', '"
-                + birthday + "');");
-//        databaseHelper.insertUsers(new Users(name, famile, surname, numpass, birthday), library);
+    private void update() {
+        Intent intent = getIntent();
+        String dolche = intent.getStringExtra(SelectBooks.EXTRA_MESSAGE);
+        String numpasser = etnewnumpass.getText().toString();
+        try {
+            c.setTime(sdf.parse(date.toString()));
 
-
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DATE, 14);
+        deadline = sdf.format(c.getTime());
+        Intent intent1 = new Intent(this, MyBooksRV.class);
+        intent1.putExtra(EXTRA_MESSAGE123, dolche);
+        startActivity(intent);
+        library.execSQL("INSERT INTO mybooks (title, author) SELECT title, author FROM books WHERE title = '" + dolche + "'");
+        library.execSQL("UPDATE mybooks SET numpass = '" + numpasser + "' WHERE title = '" + dolche + "'");
+        library.execSQL("UPDATE mybooks SET deadline = '" + deadline + "' WHERE title = '" + dolche + "'");
+        library.execSQL("DELETE FROM books WHERE title = '" + dolche + "'");
+        Toast.makeText(getApplicationContext(), "Приходите забирать", Toast.LENGTH_LONG).show();
     }
 
     private void goHome() {
