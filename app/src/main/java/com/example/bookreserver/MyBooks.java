@@ -1,8 +1,10 @@
 package com.example.bookreserver;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +29,9 @@ public class MyBooks extends AppCompatActivity {
         recyclerView = findViewById(R.id.list_viewmy);
         myBooksRV = new MyBooksRV(bookList, this);
         recyclerView.setAdapter(myBooksRV);
+        Intent intent = getIntent();
+        String dolche = intent.getStringExtra(NewDetails.EXTRA_MESSAGE123);
+        library.execSQL("SELECT deadline FROM mybooks WHERE title = '" + dolche+"'");
         selectBook();
 
 
@@ -39,7 +44,8 @@ public class MyBooks extends AppCompatActivity {
             do {
                 String title = query.getString(1);
                 String author = query.getString(2);
-                bookList.add(new Books(title, author));
+                String deadline = query.getString(4);
+                bookList.add(new Books(title, author, deadline));
             } while (query.moveToNext());
         }
     }

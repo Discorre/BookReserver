@@ -4,11 +4,13 @@ package com.example.bookreserver;
 public class Books{
     private String title;
     private String author;
+    private String deadline;
 
 
-    public Books(String title, String author){
+    public Books(String title, String author, String deadline){
         this.title = title;
         this.author = author;
+        this.deadline = deadline;
     }
 
     public String getName() {
@@ -25,5 +27,13 @@ public class Books{
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 }

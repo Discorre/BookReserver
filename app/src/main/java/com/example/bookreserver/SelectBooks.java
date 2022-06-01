@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +70,8 @@ public class SelectBooks extends AppCompatActivity {
             do {
                 String title = query.getString(1);
                 String author = query.getString(2);
-                booksList.add(new Books(title, author));
+                String deadline = query.getString(3);
+                booksList.add(new Books(title, author, deadline));
             } while (query.moveToNext());
         }
     }

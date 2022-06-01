@@ -1,6 +1,10 @@
 package com.example.bookreserver;
 
+import static com.example.bookreserver.NewDetails.deadline;
+
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +22,9 @@ public class MyBooksRV extends RecyclerView.Adapter<MyBooksRV.ViewHolder> {
 
     private final ArrayList<Books> mybooks;
     private final LayoutInflater inflater;
-    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
+    /*private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
     private static Calendar c = Calendar.getInstance();
-    String deadline = NewDetails.deadline;
+    String deadline12 = NewDetails.deadline;*/
 
 
     public MyBooksRV(ArrayList<Books> mybooks, Context context) {
@@ -39,15 +43,16 @@ public class MyBooksRV extends RecyclerView.Adapter<MyBooksRV.ViewHolder> {
         Books books = mybooks.get(position);
         holder.mybook.setText("Название: " + books.getName());
         holder.myauthor.setText("Автор: " + books.getAuthor());
-        try {
-            c.setTime(sdf.parse(deadline));
+        /*try {
+            c.setTime(sdf.parse(deadline12));
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
         c.add(Calendar.DATE, 14);
-        String deadline = NewDetails.deadline;
-        holder.mydeadline.setText("Дата сдачи: "+deadline);
+        deadline12 = sdf.format(c.getTime());*/
+
+        holder.mydeadline.setText("Дата сдачи: "+books.getDeadline());
     }
 
     @Override
