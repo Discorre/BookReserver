@@ -1,10 +1,12 @@
 package com.example.bookreserver;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,8 @@ public class SelectBooks extends AppCompatActivity {
     BookAdapterRV bookAdapterRV;
     SQLiteDatabase library;
 
-    Button synbtn;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,20 +41,13 @@ public class SelectBooks extends AppCompatActivity {
         };
         bookAdapterRV = new BookAdapterRV(booksList, this, bookClickListener);
         recyclerView.setAdapter(bookAdapterRV);
-        synbtn = findViewById(R.id.synch);
-        synbtn.setOnClickListener(view -> {
+        selectBook();
+        if (bookAdapterRV.getItemCount() == 0) {
             initBooks();
-            selectBook();
-            library.close();
-            bookAdapterRV.notifyDataSetChanged();
-            synbtn.setEnabled(false);
-
-        });
+        }
         selectBook();
 
-
     }
-
 
     private void initBooks() {
         booksList.clear();

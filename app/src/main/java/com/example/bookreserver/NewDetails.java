@@ -69,7 +69,7 @@ public class NewDetails extends AppCompatActivity {
         library.execSQL("UPDATE mybooks SET numpass = '" + numpasser + "' WHERE title = '" + dolche + "'");
         library.execSQL("UPDATE mybooks SET deadline = '" + deadline + "' WHERE title = '" + dolche + "'");
         library.execSQL("DELETE FROM books WHERE title = '" + dolche + "'");
-        Toast.makeText(getApplicationContext(), "Приходите забирать", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Приходите забирать", Toast.LENGTH_SHORT).show();
     }
 
     private void goHome() {

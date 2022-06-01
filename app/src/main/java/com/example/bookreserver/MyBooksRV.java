@@ -9,12 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MyBooksRV extends RecyclerView.Adapter<MyBooksRV.ViewHolder> {
 
     private final ArrayList<Books> mybooks;
     private final LayoutInflater inflater;
+    private static SimpleDateFormat sdf = new SimpleDateFormat("dd-MMMM-yyyy");
+    private static Calendar c = Calendar.getInstance();
+    String deadline = NewDetails.deadline;
 
 
     public MyBooksRV(ArrayList<Books> mybooks, Context context) {
@@ -33,6 +39,13 @@ public class MyBooksRV extends RecyclerView.Adapter<MyBooksRV.ViewHolder> {
         Books books = mybooks.get(position);
         holder.mybook.setText("Название: " + books.getName());
         holder.myauthor.setText("Автор: " + books.getAuthor());
+        try {
+            c.setTime(sdf.parse(deadline));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        c.add(Calendar.DATE, 14);
         String deadline = NewDetails.deadline;
         holder.mydeadline.setText("Дата сдачи: "+deadline);
     }
