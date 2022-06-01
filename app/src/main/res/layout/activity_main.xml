@@ -61,9 +61,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="v.1 \n Школьная библиотека Лицей №888" />
+            android:text="v.1.0.2 \n Школьная библиотека Лицей №888
+            \n Автор: Михайлов Егор
+            \n Город: Новосибирск" />
     </LinearLayout>
 </LinearLayout>
